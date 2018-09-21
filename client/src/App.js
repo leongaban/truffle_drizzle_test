@@ -1,16 +1,9 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
+import ReadString from "./ReadString";
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      loading: true,
-      drizzleState: null
-    }
-  }
+  state = { loading: true, drizzleState: null };
 
   componentDidMount() {
     const { drizzle } = this.props;
@@ -28,9 +21,20 @@ class App extends Component {
     });
   }
 
+  compomentWillUnmount() {
+    this.unsubscribe();
+  }
+
   render() {
     if (this.state.loading) return "Loading Drizzle...";
-    return <div className="App">Drizzle is ready</div>;
+    return (
+      <div className="App">
+        <ReadString
+          drizzle={this.props.drizzle}
+          drizzleState={this.state.drizzleState}
+        />
+      </div>
+    );
   }
 }
 
